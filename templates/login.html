@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radio NULA - Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        @import "tailwindcss";
+        @plugin "daisyui" {
+            themes: light --default;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-base-200 flex items-center justify-center">
+    <div class="card bg-base-100 shadow-xl w-96">
+        <div class="card-body">
+            <h1 class="card-title text-2xl mb-6 justify-center">Radio NULA</h1>
+            <form method="POST" action="/login" class="space-y-4">
+                {% if error %}
+                <div class="alert alert-error">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <span>{{ error }}</span>
+                </div>
+                {% endif %}
+                <div class="form-control">
+                    <input 
+                        type="password" 
+                        name="password" 
+                        placeholder="Enter password" 
+                        class="input input-bordered w-full"
+                        autofocus
+                    >
+                </div>
+                <button type="submit" class="btn btn-primary w-full">GO</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

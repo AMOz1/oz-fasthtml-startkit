@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Runtime files
+.server.pid
+.sesskey
+
+# Database
+# Uncomment the next line if you don't want to version control the database
+# radio.db 
