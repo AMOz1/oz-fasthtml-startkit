@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <title>Login - Radio NULA Track Search</title>
+    
+    <!-- Oz-Pico CSS (for base styling) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/AMOz1/oz-pico/css/pico.css">
+    
+    <!-- Tailwind CSS (for layout and utilities) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            corePlugins: {
+                preflight: false, // Disable Tailwind's reset to avoid conflict with Pico CSS
+            }
+        }
+    </script>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+    <main class="container max-w-md mx-auto px-4">
+        <article class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+            <h1 class="text-2xl mb-6 text-center">Radio NULA Track Search</h1>
+            
+            <form method="post" action="/login">
+                <div class="mb-4">
+                    <label for="password" class="inline-block mb-2">Password</label>
+                    <input type="password" id="password" name="password" required autofocus class="w-full">
+                </div>
+                
+                {% if error %}
+                <div class="text-red-600 dark:text-red-400 mb-4 py-2 px-3 bg-red-100 dark:bg-red-900/30 rounded">
+                    {{ error }}
+                </div>
+                {% endif %}
+                
+                <div class="mt-6">
+                    <button type="submit" class="w-full">Login</button>
+                </div>
+            </form>
+        </article>
+    </main>
+    
+    <script>
+        // Set the theme based on system preference
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+</body>
+</html> 
