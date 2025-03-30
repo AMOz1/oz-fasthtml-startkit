@@ -3,57 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
     <title>Radio NULA Track Search</title>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link 
+        rel="stylesheet" 
+        href="https://cdn.jsdelivr.net/gh/AMOz1/oz-pico/css/pico.css"
+    >
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     <style>
-        @import "tailwindcss";
-        @plugin "daisyui" {
-            themes: light --default;
+        /* Custom styles to enhance the layout */
+        .search-container {
+            max-width: var(--oz-pico-size-xl, 800px);
+            margin: 0 auto;
+            padding: calc(var(--oz-pico-spacing) * 2) var(--oz-pico-spacing);
+        }
+        .header-controls {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--oz-pico-muted-color);
+        }
+        .header-controls label {
+            margin: 0;
+        }
+        .header-controls a {
+            color: var(--oz-pico-muted-color);
+            text-decoration: none;
+        }
+        .header-controls a:hover {
+            text-decoration: underline;
+        }
+        #search-input {
+            margin-bottom: 1rem;
+        }
+        #results {
+            margin: 0;
+            padding: 0;
+        }
+        #results > div {
+            margin: 0;
+            padding: 0;
+        }
+        #results small {
+            color: var(--oz-pico-muted-color);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        table {
+            margin: 0;
         }
     </style>
 </head>
-<body class="min-h-screen bg-base-200 py-8">
-    <div class="container mx-auto px-4 max-w-3xl">
-        <div class="card bg-base-100">
-            <div class="card-body">
-                <div class="flex justify-between items-center mb-8">
-                    <h1 class="text-3xl font-bold">Radio NULA track search</h1>
-                    <form action="/logout" method="POST">
-                        <button type="submit" class="btn btn-ghost btn-sm">Logout</button>
-                    </form>
-                </div>
-                <div class="form-control">
-                    <div class="join w-full">
-                        <input 
-                            id="search-input" 
-                            name="q" 
-                            type="text" 
-                            placeholder="Enter track name or artist..." 
-                            class="input input-bordered join-item w-full"
-                            hx-post="/search"
-                            hx-trigger="keyup changed delay:500ms, search"
-                            hx-target="#results"
-                            autofocus
-                        >
-                        <button 
-                            type="button" 
-                            class="btn btn-primary join-item"
-                            hx-post="/search"
-                            hx-include="#search-input"
-                            hx-target="#results"
-                        >Search</button>
-                    </div>
-                </div>
-                <div id="results" class="mt-8">
-                    <div class="alert alert-info">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        <span>Enter a search term to find tracks</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+<body>
+    <!-- Header controls -->
+    <div class="header-controls">
+        <a href="/logout">Logout</a>
+        <label>
+            <input type="checkbox" role="switch" id="themeSwitch">
+            Dark theme
+        </label>
     </div>
+
+    <main class="container search-container">
+        <h1>Radio NULA track search</h1>
+
+        <input 
+            id="search-input" 
+            name="q" 
+            type="search" 
+            placeholder="Enter track name or artist..." 
+            hx-post="/search"
+            hx-trigger="keyup changed delay:500ms, search"
+            hx-target="#results"
+            autofocus
+        >
+
+        <div id="results">
+            Enter a search term to find tracks
+        </div>
+    </main>
+
+    <script>
+        // Theme switching logic
+        const themeSwitch = document.getElementById('themeSwitch');
+        
+        // Set initial theme and switch state based on system preference
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeSwitch.checked = true;
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            themeSwitch.checked = false;
+        }
+
+        // Handle theme switch changes
+        themeSwitch.addEventListener('change', function() {
+            document.documentElement.setAttribute('data-theme', 
+                this.checked ? 'dark' : 'light'
+            );
+        });
+    </script>
 </body>
 </html>

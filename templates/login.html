@@ -3,39 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
     <title>Radio NULA - Login</title>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link 
+        rel="stylesheet" 
+        href="https://cdn.jsdelivr.net/gh/AMOz1/oz-pico/css/pico.css"
+    >
     <style>
-        @import "tailwindcss";
-        @plugin "daisyui" {
-            themes: light --default;
+        .login-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: calc(var(--oz-pico-spacing) * 2) var(--oz-pico-spacing);
+        }
+        article {
+            margin-bottom: var(--oz-pico-spacing);
+            padding: calc(var(--oz-pico-spacing) * 1.5);
         }
     </style>
 </head>
-<body class="min-h-screen bg-base-200 flex items-center justify-center">
-    <div class="card bg-base-100 shadow-xl w-96">
-        <div class="card-body">
-            <h1 class="card-title text-2xl mb-6 justify-center">Radio NULA</h1>
-            <form method="POST" action="/login" class="space-y-4">
+<body>
+    <main class="container login-container">
+        <article>
+            <header>
+                <h1>Radio NULA</h1>
+            </header>
+            <form method="POST" action="/login">
                 {% if error %}
-                <div class="alert alert-error">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    <span>{{ error }}</span>
-                </div>
+                <div style="color: var(--oz-pico-form-element-invalid-border-color); margin-bottom: var(--oz-pico-spacing);">{{ error }}</div>
                 {% endif %}
-                <div class="form-control">
-                    <input 
-                        type="password" 
-                        name="password" 
-                        placeholder="Enter password" 
-                        class="input input-bordered w-full"
-                        autofocus
-                    >
-                </div>
-                <button type="submit" class="btn btn-primary w-full">GO</button>
+                <input 
+                    type="password" 
+                    name="password" 
+                    placeholder="Enter password" 
+                    required
+                    autofocus
+                    aria-invalid="{{ 'true' if error else 'false' }}"
+                >
+                <button type="submit">GO</button>
             </form>
-        </div>
-    </div>
+        </article>
+    </main>
 </body>
 </html>
