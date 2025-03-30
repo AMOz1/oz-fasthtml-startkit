@@ -5,43 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light dark">
     <title>Radio NULA - Login</title>
-    <link 
-        rel="stylesheet" 
-        href="https://cdn.jsdelivr.net/gh/AMOz1/oz-pico/css/pico.css"
-    >
-    <style>
-        .login-container {
-            max-width: 400px;
-            margin: 0 auto;
-            padding: calc(var(--oz-pico-spacing) * 2) var(--oz-pico-spacing);
+    
+    <!-- Oz-Pico CSS (for base styling) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/AMOz1/oz-pico/css/pico.css">
+    
+    <!-- Tailwind CSS (for layout and utilities) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            corePlugins: {
+                preflight: false, // Disable Tailwind's reset to avoid conflict with Pico CSS
+            }
         }
-        article {
-            margin-bottom: var(--oz-pico-spacing);
-            padding: calc(var(--oz-pico-spacing) * 1.5);
-        }
-    </style>
+    </script>
 </head>
-<body>
-    <main class="container login-container">
-        <article>
-            <header>
-                <h1>Radio NULA</h1>
+<body class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <main class="max-w-md w-full space-y-8">
+        <article class="bg-white dark:bg-gray-800 shadow rounded-lg p-8">
+            <header class="text-center">
+                <h1 class="text-3xl font-bold">Radio NULA</h1>
             </header>
-            <form method="POST" action="/login">
+            <form method="POST" action="/login" class="mt-8 space-y-6">
                 {% if error %}
-                <div style="color: var(--oz-pico-form-element-invalid-border-color); margin-bottom: var(--oz-pico-spacing);">{{ error }}</div>
+                <div class="text-red-500 text-center">{{ error }}</div>
                 {% endif %}
-                <input 
-                    type="password" 
-                    name="password" 
-                    placeholder="Enter password" 
-                    required
-                    autofocus
-                    aria-invalid="{{ 'true' if error else 'false' }}"
-                >
-                <button type="submit">GO</button>
+                <div>
+                    <input 
+                        type="password" 
+                        name="password" 
+                        placeholder="Enter password" 
+                        required
+                        autofocus
+                        class="w-full"
+                        aria-invalid="{{ 'true' if error else 'false' }}"
+                    >
+                </div>
+                <div>
+                    <button 
+                        type="submit"
+                        class="w-full flex justify-center py-2.5"
+                    >GO</button>
+                </div>
             </form>
         </article>
     </main>
+
+    <script>
+        // Set theme based on system preference
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
 </body>
 </html>

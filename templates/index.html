@@ -5,37 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light dark">
     <title>Radio NULA Track Search</title>
-    <link 
-        rel="stylesheet" 
-        href="https://cdn.jsdelivr.net/gh/AMOz1/oz-pico/css/pico.css"
-    >
+    
+    <!-- Oz-Pico CSS (for base styling) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/AMOz1/oz-pico/css/pico.css">
+    
+    <!-- Tailwind CSS (for layout and utilities) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            corePlugins: {
+                preflight: false, // Disable Tailwind's reset to avoid conflict with Pico CSS
+            }
+        }
+    </script>
+    
+    <!-- HTMX for interactive elements -->
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    
     <style>
         /* Custom styles to enhance the layout */
         .search-container {
             max-width: var(--oz-pico-size-xl, 800px);
             margin: 0 auto;
             padding: calc(var(--oz-pico-spacing) * 2) var(--oz-pico-spacing);
-        }
-        .header-controls {
-            position: fixed;
-            top: 1rem;
-            right: 1rem;
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            font-size: 0.9rem;
-            color: var(--oz-pico-muted-color);
-        }
-        .header-controls label {
-            margin: 0;
-        }
-        .header-controls a {
-            color: var(--oz-pico-muted-color);
-            text-decoration: none;
-        }
-        .header-controls a:hover {
-            text-decoration: underline;
         }
         #search-input {
             margin-bottom: 1rem;
@@ -59,17 +52,17 @@
     </style>
 </head>
 <body>
-    <!-- Header controls -->
-    <div class="header-controls">
-        <a href="/logout">Logout</a>
-        <label>
+    <!-- Header controls with Tailwind classes -->
+    <div class="fixed top-4 right-4 flex items-center gap-4 text-sm">
+        <a href="/logout" class="text-gray-500 hover:underline">Logout</a>
+        <label class="flex items-center gap-2">
             <input type="checkbox" role="switch" id="themeSwitch">
-            Dark theme
+            <span class="text-gray-500">Dark theme</span>
         </label>
     </div>
 
     <main class="container search-container">
-        <h1>Radio NULA track search</h1>
+        <h1 class="mb-6">Radio NULA track search</h1>
 
         <input 
             id="search-input" 
@@ -80,32 +73,45 @@
             hx-trigger="keyup changed delay:500ms, search"
             hx-target="#results"
             autofocus
+            class="w-full"
         >
 
-        <div id="results">
-            Enter a search term to find tracks
+        <div id="results" class="mt-4">
+            <div class="text-gray-500">Enter a search term to find tracks</div>
         </div>
     </main>
 
     <script>
+        // Dark mode setup
+        const darkModeToggle = () => {
+            // Check for dark mode preference
+            if (document.documentElement.getAttribute('data-theme') === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'light');
+                document.documentElement.classList.remove('dark');
+                themeSwitch.checked = false;
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.documentElement.classList.add('dark');
+                themeSwitch.checked = true;
+            }
+        };
+        
         // Theme switching logic
         const themeSwitch = document.getElementById('themeSwitch');
         
         // Set initial theme and switch state based on system preference
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
             document.documentElement.setAttribute('data-theme', 'dark');
+            document.documentElement.classList.add('dark');
             themeSwitch.checked = true;
         } else {
             document.documentElement.setAttribute('data-theme', 'light');
+            document.documentElement.classList.remove('dark');
             themeSwitch.checked = false;
         }
 
         // Handle theme switch changes
-        themeSwitch.addEventListener('change', function() {
-            document.documentElement.setAttribute('data-theme', 
-                this.checked ? 'dark' : 'light'
-            );
-        });
+        themeSwitch.addEventListener('change', darkModeToggle);
     </script>
 </body>
 </html>

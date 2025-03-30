@@ -85,7 +85,7 @@ async def search(request: Request):
     if not q:
         # Use a simple div without role="alert"
         return HTMLResponse("""
-            <div style="margin: 0; padding: 0;">Enter a search term to find tracks</div>
+            <div class="text-gray-500">Enter a search term to find tracks</div>
         """)
     
     results = search_tracks(q)
@@ -93,21 +93,21 @@ async def search(request: Request):
     if not results:
         # Use a simple div without role="alert"
         return HTMLResponse(f"""
-            <div style="margin: 0; padding: 0;">No matching tracks found for: {q}</div>
+            <div class="text-amber-600 dark:text-amber-400 py-2">No matching tracks found for: {q}</div>
         """)
     
-    # Add inline style to reset margin/padding on the main result wrapper
+    # Add Tailwind classes for better styling
     results_html = f"""
-        <div style="margin: 0; padding: 0;">
-            <small>Found {len(results)} tracks matching: {q}</small>
-            <table>
-                <thead>
+        <div>
+            <div class="text-gray-500 text-sm mb-2">Found {len(results)} tracks matching: {q}</div>
+            <table class="w-full">
+                <thead class="bg-gray-100 dark:bg-gray-800">
                     <tr>
-                        <th>Track</th>
+                        <th class="text-left py-2 px-3">Track</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {"".join(f'<tr><td>{result["track"]}</td></tr>' for result in results)}
+                    {"".join(f'<tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800"><td class="py-3 px-3">{result["track"]}</td></tr>' for result in results)}
                 </tbody>
             </table>
         </div>
