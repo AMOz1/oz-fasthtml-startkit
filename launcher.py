@@ -144,4 +144,4 @@ class RadioNulaLauncher:
 
 if __name__ == "__main__":
     app = RadioNulaLauncher()
-    app.run() 
+    app.run()

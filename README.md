@@ -72,7 +72,8 @@ The script will:
 - Live search as you type
 - Case-insensitive search
 - Multi-word search (finds tracks containing ALL words)
-- Clean, responsive UI with DaisyUI and Tailwind CSS
+- Clean, responsive UI using a custom **oz-pico CSS** fork (via CDN)
+- Light/Dark mode toggle
 - Mobile-friendly design
 - Easy-to-use desktop launcher
 
@@ -90,7 +91,7 @@ The application expects a SQLite database named `radio.db` with a table named `t
 ### Technical Stack
 - FastAPI - Modern, fast web framework
 - HTMX - Dynamic updates without JavaScript
-- DaisyUI/Tailwind CSS - Responsive styling
+- oz-pico CSS (fork of Pico CSS) - Responsive styling via CDN
 - SQLite - Lightweight database
 - Jinja2 - Template rendering
 - Uvicorn - ASGI server
