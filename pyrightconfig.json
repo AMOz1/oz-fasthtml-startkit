@@ -1,0 +1,11 @@
+{
+    "reportMissingImports": false,
+    "reportUndefinedVariable": false,
+    "reportGeneralTypeIssues": false,
+    "pythonVersion": "3.7",
+    "exclude": [
+        "**/node_modules",
+        "**/__pycache__",
+        "**/venv"
+    ]
+} 
